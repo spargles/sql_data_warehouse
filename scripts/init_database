@@ -1,0 +1,36 @@
+/*
+------------------------------------------------------------------------------
+Checks if database exists, drops it if it does and creates new database.
+Don't use if database 'Datawarehouse' already exists and shouldn't be deleted.
+Also creates 3 schemas.
+Long story short: setup for new project.
+-------------------------------------------------------------------------------
+*/
+
+
+
+
+USE master;
+
+
+-- execute WITH USE master;
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse')
+BEGIN 
+    ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE DataWarehouse;
+END;
+GO
+
+CREATE DATABASE DataWarehouse;
+GO
+
+USE DataWarehouse;
+GO
+
+-- create schemas
+CREATE SCHEMA bronze;
+GO
+CREATE SCHEMA silver;
+GO 
+CREATE SCHEMA gold;
+GO
